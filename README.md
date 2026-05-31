@@ -2,6 +2,8 @@
 
 Distinct GM affects and visible staff prefixes for Martysama serverfiles.
 
+[English](#english) | [Polski](#polski)
+
 ![Example](Example.jpg)
 
 External example: https://metin2.download/picture/YJeeJ4r2rXR337Pn6a76D2cyj7c1bP29/.jpg
@@ -10,43 +12,43 @@ External example: https://metin2.download/picture/YJeeJ4r2rXR337Pn6a76D2cyj7c1bP
 
 ### Opis
 
-System dodaje osobne efekty GM dla wybranych rang administracji oraz pokazuje nad postacia gracza prefix, np. `[HA]`, `[TECH]`, `[GA]`, `[GM]`, `[TGM]`, `[TUT]`, zamiast standardowego poziomu postaci.
+System dodaje osobne efekty GM dla wybranych rang administracji oraz pokazuje nad postacią gracza prefiks, np. `[HA]`, `[TECH]`, `[GA]`, `[GM]`, `[TGM]`, `[TUT]`, zamiast standardowego poziomu postaci.
 
-Rozwiazanie zostalo przygotowane z pomoca sztucznej inteligencji na podstawie publicznego tematu spolecznosci. Patch jest przygotowany pod Martysama serverfiles.
+Rozwiązanie zostało przygotowane z pomocą sztucznej inteligencji na podstawie publicznego tematu społeczności. Patch jest przygotowany pod Martysama serverfiles.
 
-Najwazniejsza zmiana polega na oddzieleniu wygladu GM od poziomu uprawnien administratora. Poziom uprawnien dalej pozostaje w kolumnie `mAuthority`, a za sam prefix oraz efekt odpowiada nowa kolumna `prefix` w tabeli `gmlist`.
+Najważniejsza zmiana polega na oddzieleniu wyglądu GM od poziomu uprawnień administratora. Poziom uprawnień dalej pozostaje w kolumnie `mAuthority`, a za sam prefiks oraz efekt odpowiada nowa kolumna `prefix` w tabeli `gmlist`.
 
 ### Funkcje
 
-- osobny efekt wizualny dla prefixow `HA`, `TECH`, `GA`, `GM`, `TGM`, `TUT`
-- prefix nad postacia GM zamiast poziomu postaci
-- niezalezny prefix wizualny bez zmiany realnych uprawnien GM
-- domyslny prefix `GM`
-- odswiezanie efektu po zmianie listy GM
-- gotowe snippety dla serwera, binarki klienta, roota i locale
+- osobny efekt wizualny dla prefiksów `HA`, `TECH`, `GA`, `GM`, `TGM`, `TUT`
+- prefiks nad postacią GM zamiast poziomu postaci
+- niezależny prefiks wizualny bez zmiany realnych uprawnień GM
+- domyślny prefiks `GM`
+- odświeżanie efektu po zmianie listy GM
+- gotowe fragmenty kodu dla serwera, binarki klienta, roota i locale
 
 ### Struktura paczki
 
-- `server/gmlist.sql` - zapytanie SQL dodajace kolumne `prefix`
+- `server/gmlist.sql` - zapytanie SQL dodające kolumnę `prefix`
 - `svn/server/common` - zmiany dla `CommonDefines.h` i `tables.h`
 - `svn/server/db` - zmiany dla pobierania listy GM z bazy
-- `svn/server/game` - affecty, prefix GM, odswiezanie efektu i obsluga postaci
-- `svn/client/UserInterface` - define, ID affectow, eksport do Pythona i wyswietlanie prefixu
-- `client/root` - rejestracja efektow i sciezki locale
-- `client/locale/xx/effect` - miejsce na pliki `.mse` i `.tga` efektow
+- `svn/server/game` - affecty, prefiks GM, odświeżanie efektu i obsługa postaci
+- `svn/client/UserInterface` - define, ID affectów, eksport do Pythona i wyświetlanie prefiksu
+- `client/root` - rejestracja efektów i ścieżki locale
+- `client/locale/xx/effect` - miejsce na pliki `.mse` i `.tga` efektów
 
 ### Instalacja
 
-1. Zrob kopie zapasowa zrodel serwera, zrodel klienta, plikow root/locale oraz bazy danych.
+1. Zrób kopię zapasową źródeł serwera, źródeł klienta, plików root/locale oraz bazy danych.
 
-2. Wykonaj SQL z pliku `server/gmlist.sql` w bazie, w ktorej znajduje sie tabela `gmlist`:
+2. Wykonaj SQL z pliku `server/gmlist.sql` w bazie, w której znajduje się tabela `gmlist`:
 
 ```sql
 ALTER TABLE gmlist
 ADD COLUMN prefix ENUM('HA','TECH','GA','GM','TGM','TUT') NOT NULL DEFAULT 'GM' AFTER mAuthority;
 ```
 
-3. W zrodlach serwera dodaj snippety z katalogu `svn/server` do odpowiednich plikow:
+3. W źródłach serwera dodaj fragmenty z katalogu `svn/server` do odpowiednich plików:
 
 - `common/CommonDefines.h`
 - `common/tables.h`
@@ -58,7 +60,7 @@ ADD COLUMN prefix ENUM('HA','TECH','GA','GM','TGM','TUT') NOT NULL DEFAULT 'GM' 
 - `game/src/gm.h`
 - `game/src/input_db.cpp`
 
-4. W zrodlach klienta dodaj snippety z katalogu `svn/client/UserInterface` do odpowiednich plikow:
+4. W źródłach klienta dodaj fragmenty z katalogu `svn/client/UserInterface` do odpowiednich plików:
 
 - `Locale_inc.h`
 - `InstanceBase.h`
@@ -67,36 +69,36 @@ ADD COLUMN prefix ENUM('HA','TECH','GA','GM','TGM','TUT') NOT NULL DEFAULT 'GM' 
 - `PythonApplicationModule.cpp`
 - `PythonCharacterModule.cpp`
 
-5. W plikach root klienta dodaj snippety z katalogu `client/root`:
+5. W plikach root klienta dodaj fragmenty z katalogu `client/root`:
 
 - `localeinfo.py`
 - `playersettingmodule.py`
 
-6. Dodaj pliki efektow do locale klienta:
+6. Dodaj pliki efektów do locale klienta:
 
 ```text
-locale/<twoj_locale>/effect/ha.mse
-locale/<twoj_locale>/effect/ha.tga
-locale/<twoj_locale>/effect/tech.mse
-locale/<twoj_locale>/effect/tech.tga
-locale/<twoj_locale>/effect/ga.mse
-locale/<twoj_locale>/effect/ga.tga
-locale/<twoj_locale>/effect/gm.mse
-locale/<twoj_locale>/effect/tgm.mse
-locale/<twoj_locale>/effect/tgm.tga
-locale/<twoj_locale>/effect/tut.mse
-locale/<twoj_locale>/effect/tut.tga
+locale/<twój_locale>/effect/ha.mse
+locale/<twój_locale>/effect/ha.tga
+locale/<twój_locale>/effect/tech.mse
+locale/<twój_locale>/effect/tech.tga
+locale/<twój_locale>/effect/ga.mse
+locale/<twój_locale>/effect/ga.tga
+locale/<twój_locale>/effect/gm.mse
+locale/<twój_locale>/effect/tgm.mse
+locale/<twój_locale>/effect/tgm.tga
+locale/<twój_locale>/effect/tut.mse
+locale/<twój_locale>/effect/tut.tga
 ```
 
-7. Przebuduj `game`, `db` oraz binarke klienta, a nastepnie spakuj ponownie `root` i `locale`.
+7. Przebuduj `game`, `db` oraz binarkę klienta, a następnie spakuj ponownie `root` i `locale`.
 
-8. Zrestartuj serwer albo przeladuj liste GM, jezeli Twoje pliki obsluguja reload administracji.
+8. Zrestartuj serwer albo przeładuj listę GM, jeżeli Twoje pliki obsługują reload administracji.
 
-### Uzycie
+### Użycie
 
-Prefix ustawiasz w tabeli `gmlist`, niezaleznie od `mAuthority`.
+Prefiks ustawiasz w tabeli `gmlist`, niezależnie od `mAuthority`.
 
-Przyklad:
+Przykład:
 
 ```sql
 UPDATE gmlist
@@ -104,21 +106,21 @@ SET prefix = 'HA'
 WHERE mName = 'NickGM';
 ```
 
-Dostepne wartosci:
+Dostępne wartości:
 
 ```text
 HA, TECH, GA, GM, TGM, TUT
 ```
 
-Jezeli kolumna `prefix` jest pusta lub nie zostanie ustawiona, system uzyje domyslnego prefixu `GM`.
+Jeżeli kolumna `prefix` jest pusta lub nie zostanie ustawiona, system użyje domyślnego prefiksu `GM`.
 
-### Wazne uwagi
+### Ważne uwagi
 
 - `mAuthority` dalej odpowiada za realne uprawnienia administratora.
-- `prefix` odpowiada tylko za wyswietlany tag oraz efekt wizualny.
-- ID affectow po stronie klienta sa celowo przesuniete o `-1` wzgledem serwera. Nie zmieniaj ich bez sprawdzenia mapowania flag affectow.
-- Jezeli zmieniasz nazwy prefixow, zaktualizuj rownoczesnie SQL, `RefreshGMAffect`, pliki root i rejestracje efektow.
-- Pliki `.mse` moga wymagac dodatkowych tekstur. Upewnij sie, ze wszystkie zasoby wskazane w `.mse` znajduja sie w kliencie.
+- `prefix` odpowiada tylko za wyświetlany tag oraz efekt wizualny.
+- ID affectów po stronie klienta są celowo przesunięte o `-1` względem serwera. Nie zmieniaj ich bez sprawdzenia mapowania flag affectów.
+- Jeżeli zmieniasz nazwy prefiksów, zaktualizuj równocześnie SQL, `RefreshGMAffect`, pliki root i rejestrację efektów.
+- Pliki `.mse` mogą wymagać dodatkowych tekstur. Upewnij się, że wszystkie zasoby wskazane w `.mse` znajdują się w kliencie.
 
 ### Autor
 
