@@ -1,0 +1,2 @@
+ALTER TABLE gmlist
+ADD COLUMN prefix ENUM('HA','TECH','GA','GM','TGM','TUT') NOT NULL DEFAULT 'GM' AFTER mAuthority;

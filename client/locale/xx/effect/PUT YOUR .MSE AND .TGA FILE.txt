@@ -1,0 +1,1 @@
+Put your all .mse and .tga files here. Make sure the filenames are same with localeinfo.py path.
